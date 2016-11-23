@@ -173,6 +173,7 @@ public class Editor extends Application{
 				scrollbar.setValue(scrollbar.getValue()+1);
 			else if(action.getDeltaY() > 0 && scrollbar.getValue() > scrollbar.getMin())
 				scrollbar.setValue(scrollbar.getValue()-1);
+			scrollbar.setValue(Math.round(scrollbar.getValue()));
 		});
 		scrollbar.setOrientation(Orientation.VERTICAL);
 		mainlayout.setRight(sidebarlayout);
@@ -187,7 +188,6 @@ public class Editor extends Application{
 	//Sidemenu
 	//Selection Functions
 	protected static void sideMenu_SelectTiles() {
-                
 		sidebar.getChildren().clear();
 		selectedID = selectedTileID;
 		sidemenu.setText("Tile Selector");
@@ -199,9 +199,9 @@ public class Editor extends Application{
 				tilesFollowingFilter.add(t);
 		}
 		//change the scrollbar to the correct size depending on the filter
-		scrollbar.setMax(tilesFollowingFilter.size() - sidebar.getHeight()/36); //TODO hard coded
+		scrollbar.setMax(tilesFollowingFilter.size() - 15); //TODO hard coded 16
 		//add the rows one at a time until we hit the cap we can fit in
-		for(int rows = 0; rows < sidebar.getHeight()/36; rows++){ //TODO hard coded
+		for(int rows = 0; rows < 16; rows++){ //TODO hard coded 16
 			//TODO DEBUG: green.png can appear twice at the top
 			Tile t;
 			try{
@@ -250,9 +250,9 @@ public class Editor extends Application{
 				traveseFollowingFilter.add(t);
 		}
 		//change the scrollbar to the correct size depending on the filter
-		scrollbar.setMax(traveseFollowingFilter.size() - sidebar.getHeight()/36); //TODO hard coded 36
+		scrollbar.setMax(traveseFollowingFilter.size() - 16); //TODO hard coded 16
 		//add the rows one at a time until we hit the cap we can fit in
-		for(int rows = 0; rows < sidebar.getHeight()/36; rows++){ //TODO hard coded 36
+		for(int rows = 0; rows < 16; rows++){ //TODO hard coded 16s
 			Traverse t;
 			try{
 				t = traveseFollowingFilter.get((int) (rows+scrollbar.getValue()-1));
