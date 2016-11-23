@@ -12,16 +12,16 @@ import javafx.scene.canvas.*;
 import javafx.scene.input.*;
 
 public class Palette{
-        //io info
-        private static final String PALETTEPATH = "res/tiles/tilesets/";
-        private static String loadedPalette = "palette.pal";//this can be changed later when we get to loading multiple
+	//io info
+	private static final String PALETTEPATH = "res/tiles/tilesets/";
+	private static String loadedPalette = "palette.pal";//this can be changed later when we get to loading multiple
 	//tiles: tile list. can be replaced with int[][] and whatever draw method you've got
 	//root: just saved into instance level stuff, for outer reference
 	//tileID: replaced with your paintedTileID, or whatever you call it (the one linked to LMB-press on map)
 	private final int cols;
 	private final int rows;
 	//private final Color transparentColor = Color.GREEN;
-        private int tileBG;
+	private int tileBG;
 	private int[][] tiles;
 	private Canvas canvas;
 	private int tileID;
@@ -66,11 +66,11 @@ public class Palette{
 		//draws all tiles to the canvas. basically paintComponent(Graphics)
 		for(int row = 0; row < tiles.length; row++){
 			for(int col = 0; col < tiles[row].length; col++){
-                                //draw a tile image in the back. then if the placed id != 0, draw the tile on top 
-                                g.drawImage(Tile.getByID(tileBG).getImage(), (double)col*Tile.TILESIZE, (double)row*Tile.TILESIZE);
-                                if(tiles[row][col]!=0){
-                                    g.drawImage(Tile.getByID(tiles[row][col]).getImage(), (double)col*Tile.TILESIZE, (double)row*Tile.TILESIZE);
-                                }
+				//draw a tile image in the back. then if the placed id != 0, draw the tile on top 
+				g.drawImage(Tile.getByID(tileBG).getImage(), (double)col*Tile.TILESIZE, (double)row*Tile.TILESIZE);
+				if(tiles[row][col]!=0){
+					g.drawImage(Tile.getByID(tiles[row][col]).getImage(), (double)col*Tile.TILESIZE, (double)row*Tile.TILESIZE);
+				}
 			}
 		}
 	}
@@ -174,6 +174,7 @@ public class Palette{
                     line = br.readLine();
                 }
                 p.setBGTile(bg);
+                br.close();
                 return p;
             }catch(Exception e){
                 System.out.println("Error Loading Palette");
