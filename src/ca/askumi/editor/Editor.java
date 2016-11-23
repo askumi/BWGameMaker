@@ -186,7 +186,8 @@ public class Editor extends Application{
 
 	//Sidemenu
 	//Selection Functions
-	private static void sideMenu_SelectTiles(){
+	protected static void sideMenu_SelectTiles() {
+                
 		sidebar.getChildren().clear();
 		selectedID = selectedTileID;
 		sidemenu.setText("Tile Selector");
