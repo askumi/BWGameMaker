@@ -26,6 +26,7 @@ import javafx.scene.shape.Rectangle;
 public class Editor extends Application{
 
 	//JAVAFX
+    private static final int SELECTORSIZE = 16;
 	private static Stage mainWindow, tileEditorWindow, mapPropertiesWindow;
 	private static Scene mainScene;
 	private static BorderPane mainlayout;
@@ -199,9 +200,9 @@ public class Editor extends Application{
 				tilesFollowingFilter.add(t);
 		}
 		//change the scrollbar to the correct size depending on the filter
-		scrollbar.setMax(tilesFollowingFilter.size() - 15); //TODO hard coded 16
+		scrollbar.setMax(tilesFollowingFilter.size() - SELECTORSIZE + 1);
 		//add the rows one at a time until we hit the cap we can fit in
-		for(int rows = 0; rows < 16; rows++){ //TODO hard coded 16
+		for(int rows = 0; rows < SELECTORSIZE; rows++){
 			//TODO DEBUG: green.png can appear twice at the top
 			Tile t;
 			try{
@@ -250,9 +251,9 @@ public class Editor extends Application{
 				traveseFollowingFilter.add(t);
 		}
 		//change the scrollbar to the correct size depending on the filter
-		scrollbar.setMax(traveseFollowingFilter.size() - 16); //TODO hard coded 16
+		scrollbar.setMax(traveseFollowingFilter.size() - SELECTORSIZE + 1);
 		//add the rows one at a time until we hit the cap we can fit in
-		for(int rows = 0; rows < 16; rows++){ //TODO hard coded 16s
+		for(int rows = 0; rows < SELECTORSIZE; rows++){
 			Traverse t;
 			try{
 				t = traveseFollowingFilter.get((int) (rows+scrollbar.getValue()-1));
