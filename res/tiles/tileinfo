@@ -1,7 +1,7 @@
 0:{
 	name: Green
 	desc: Green, Fullcolor
-	file: tiles/grass.png
+	file: tiles/green.png
 	offx: 0
 	offy: 0
 }
