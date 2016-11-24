@@ -181,6 +181,7 @@ public class Palette{
 				line = br.readLine();
 			}
 			p.setBGTile(bg);
+			br.close();
 			return p;
 		}catch(Exception e){
 			System.out.println("Error Loading Palette");
