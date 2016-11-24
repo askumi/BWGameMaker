@@ -4,6 +4,7 @@
 package ca.askumi.editor;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -116,7 +117,6 @@ public class Map {
 	//traverse set mass
 	private void setTraverses(int row, int col, int newTileID, int startingID){
 		//TODO add a toggleable setting to include diagnols, not only adjacent tiles
-		//TODO clean up these functions
 		int thisloc = row*10000+col;
 		if(row < 0 || col < 0 || row >= rows || col >= cols || checkTileList.contains(thisloc) || traversability[row][col] != startingID)
 			return;
@@ -288,7 +288,9 @@ public class Map {
 		return rows * Tile.TILESIZE;
 	}
 	public void setName(String newName){
-		//TODO check if map with name already exists
+                File f = new File(MAPPATH+newName+".map");
+                if(f.exists())
+                    throw new RuntimeException("Map already exists");
 		name = newName;
 	}
 	public int getLayerCount(){
