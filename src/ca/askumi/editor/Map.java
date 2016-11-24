@@ -1,6 +1,6 @@
 //Issac "Askumi" O'Hara
 //Created:		2016-11-03
-//Last Edited:	2016-11-17
+//Last Edited:	2016-11-24
 package ca.askumi.editor;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9,6 +9,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 public class Map {
 	
@@ -23,17 +27,21 @@ public class Map {
 	
 	//Constructor used to create new maps
 	public Map(String mapname, int width, int height){
-		setName(mapname);
-		rows = height;
-		cols = width;
-		layers = new ArrayList<int[][]>();
-		addLayer(new int[rows][cols], "Background");
-		traversability = new int[rows][cols];
+		try {
+			setName(mapname); //Checks if the map name exists already before setting it
+			rows = height;
+			cols = width;
+			layers = new ArrayList<int[][]>();
+			addLayer(new int[rows][cols], "Background");
+			traversability = new int[rows][cols];
+		} catch (DuplicateMapNameException e) {
+			return; //Do nothing because we are not creating the map if this exception gets thrown.
+		}
 	}
 	
 	//Constructor used to load existing maps
 	public Map(String mapname, int width, int height, ArrayList<int[][]> tileIDs, ArrayList<String> layernames, int[][] traverse){
-		setName(mapname);
+		name = mapname; //We are loading the map so we do not need to check if it exists: we set it directly.
 		rows = height;
 		cols = width;
 		layers = tileIDs;
@@ -84,14 +92,14 @@ public class Map {
 	public int getID(int layer, int row, int col){
 		return layers.get(layer)[row][col];
 	}
-        
-        //Confirmation
-        protected boolean isOutOfBounds(int row, int col){
-            return row < 0 || col < 0 || row >= rows || col >= cols;
-        }
+
+	//Confirmation
+	protected boolean isOutOfBounds(int row, int col){
+		return row < 0 || col < 0 || row >= rows || col >= cols;
+	}
 	//Editing the map
 	public void setTile(int layer, int row, int col, int newTileID){
-            if(!isOutOfBounds(row,col))
+			if(!isOutOfBounds(row,col))
 		layers.get(layer)[row][col] = newTileID;
 	}
 	//Calls setTile() on a group of tiles all with the same ID
@@ -287,13 +295,31 @@ public class Map {
 	public int getHeight(){
 		return rows * Tile.TILESIZE;
 	}
-	public void setName(String newName){
-                File f = new File(MAPPATH+newName+".map");
-                if(f.exists())
-                    throw new RuntimeException("Map already exists");
+	public void setName(String newName) throws DuplicateMapNameException{
+		if(!newName.endsWith(".map"))
+			newName += ".map";
+		//If mapalready ends with .map, we dont need to add one
+		File f = new File(MAPPATH+newName);
+		if(f.exists()){
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			alert.setTitle("Map Already Exists");
+			alert.setHeaderText("Map Already Exists");
+			alert.setContentText("A map with this name already exists. Saving will overwrite it. Do you wish to continue?");
+			Optional<ButtonType> result = alert.showAndWait();
+			if(!(result.get() == ButtonType.OK)){
+				throw new DuplicateMapNameException("Map already exists");
+			}
+		}
 		name = newName;
 	}
 	public int getLayerCount(){
 		return layers.size();
+	}
+	
+	@SuppressWarnings("serial")
+	public class DuplicateMapNameException extends Exception{
+		public DuplicateMapNameException(String message){
+			super(message);
+		}
 	}
 }

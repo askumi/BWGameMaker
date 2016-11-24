@@ -1,9 +1,10 @@
 //Issac "Askumi" O'Hara
 //Created:		2016-11-16
-//Last Edited:	2016-11-16
+//Last Edited:	2016-11-24
 package ca.askumi.editor;
 import java.util.ArrayList;
 import java.util.Optional;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -86,7 +87,12 @@ public class MapProperties extends Stage{
 			}
 		}
 		//Change the size of the map while keeping the tiles we have and adding id 0 for new ones
-		map.setName(newname);
+		try {
+			if(newname != map.getName())
+				map.setName(newname);
+		} catch (Map.DuplicateMapNameException e) {
+			//DO NOTHING, keep the current name
+		}
 		map.setX(newX);
 		map.setY(newY);
 		for(int l = 0; l < map.getLayerCount(); l++){
