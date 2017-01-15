@@ -30,6 +30,7 @@ public class Editor extends Application{
 	private static Stage mainWindow, tileEditorWindow, mapPropertiesWindow;
 	private static Scene mainScene;
 	private static BorderPane mainlayout;
+        private static ScrollPane mainScroll;
 	//Main Window
 	//Main Window - Map Canvas
 	private static Canvas canvas;
@@ -87,6 +88,8 @@ public class Editor extends Application{
 		mainWindow.setHeight(Screen.getPrimary().getBounds().getHeight()-100);
 		//Setup Scene
 		mainlayout = new BorderPane();
+                mainScroll = new ScrollPane();
+                //mainScroll.setContent(mainlayout);
 		filter.setPromptText("Search");
 		filter.setOnKeyTyped(e -> updateFilter());
 		//Set Default Scene
@@ -386,7 +389,9 @@ public class Editor extends Application{
 		canvas.setOnMouseReleased(e -> releaseevent(e.getButton()));
 		canvas.setOnMouseDragReleased(e -> releaseevent(e.getButton()));
 		graphics = canvas.getGraphicsContext2D();
-		mainlayout.setCenter(canvas);
+                mainScroll.setContent(canvas);
+		mainlayout.setCenter(mainScroll);
+                //TODO
 		updateMap();
 		updateLayerMenu();
 	}
